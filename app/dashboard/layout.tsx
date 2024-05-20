@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils'
 import type { Metadata } from 'next'
 import DashboardSideBar from './(components)/DashboardSideBar'
+import DashboardTopNav from './(components)/DashboardTopNav'
 
 export const metadata: Metadata = {
   title: 'Platypus Sass',
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <main className={cn('min-h-screen grid w-full lg:grid-cols-[280px_1fr]')}>
       <DashboardSideBar />
-      {children}
+      <DashboardTopNav>
+        <div className='p-4 flex flex-col gap-4 lg:gap-6'>{children}</div>
+      </DashboardTopNav>
     </main>
   )
 }
