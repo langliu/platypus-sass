@@ -11,9 +11,13 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { LogOut, Settings, User } from 'lucide-react'
 import Link from 'next/link'
+import { createClient } from '@/lib/supabase/client'
+import { redirect } from 'next/navigation'
+import { logout } from './actions'
 
 export function Profile() {
   const user = {}
+  const supabase = createClient()
 
   return (
     <DropdownMenu>
@@ -40,12 +44,16 @@ export function Profile() {
             <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
-        {/* <SignOutButton> */}
-        <DropdownMenuItem>
-          <LogOut className='mr-2 h-4 w-4' />
-          <span>Log out</span>
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-        </DropdownMenuItem>
+        <form action={logout}>
+          {/* <SignOutButton> */}
+          <button type='submit' className='block w-full'>
+            <DropdownMenuItem>
+              <LogOut className='mr-2 h-4 w-4' />
+              <span>Log out</span>
+              <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+            </DropdownMenuItem>
+          </button>
+        </form>
         {/* </SignOutButton> */}
       </DropdownMenuContent>
     </DropdownMenu>

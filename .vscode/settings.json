@@ -22,6 +22,7 @@
     "biomejs",
     "clsx",
     "lucide",
+    "supabase",
     "tailwindcss"
   ]
 }
