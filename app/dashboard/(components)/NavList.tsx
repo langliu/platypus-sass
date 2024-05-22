@@ -69,7 +69,7 @@ export default function NavList({ inSheet = false }: { inSheet?: boolean }) {
         <NavLink
           icon={<Settings className='size-4' />}
           title='Settings'
-          href='/dashboard/settings'
+          href='/dashboard/settings/profile'
           inSheet={inSheet}
         />
       </nav>
