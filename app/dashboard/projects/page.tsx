@@ -2,16 +2,12 @@ import React, { Suspense } from 'react'
 import { createClient } from '@/lib/supabase/server'
 
 async function getData() {
-  const res = await fetch('http://localhost:3001/api/projects', { cache: 'no-cache' })
+  'use server'
   const supabase = createClient()
-
   const { data: projects, error } = await supabase.from('projects').select('*')
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
 
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error('Failed to fetch data')
+  if (error) {
+    throw new Error(error.message)
   }
 
   return { product: projects }
@@ -22,7 +18,7 @@ async function ProjectsPage() {
   console.log(data)
   return (
     <Suspense fallback={'Loading'}>
-      <div>ProjectsPage</div>
+      <div>Projects Page</div>
       {data?.product?.map((item: { name: string }) => {
         return <p key={item.name}>{item.name}</p>
       })}
