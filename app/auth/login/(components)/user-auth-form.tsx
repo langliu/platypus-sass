@@ -1,35 +1,19 @@
 'use client'
 
 import * as React from 'react'
-import { Github, Loader } from 'lucide-react'
+import { Loader } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { login } from '../../actions'
-import { createClient } from '@/lib/supabase/client'
+import GithubLoginButton from '../../(components)/GithubLoginButton'
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
-
-  async function loginWithGithub() {
-    setIsLoading(true)
-    const supabase = createClient()
-    console.log('github')
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'github',
-      options: {
-        redirectTo: `${window.origin}/auth/callback`,
-      },
-    })
-
-    if (error) {
-      console.log('err', error)
-    }
-  }
 
   return (
     <div className={cn('grid gap-6', className)} {...props}>
@@ -79,14 +63,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           <span className='bg-background px-2 text-muted-foreground'>其他登录方式</span>
         </div>
       </div>
-      <Button variant='outline' className='w-full' onClick={loginWithGithub} disabled={isLoading}>
-        {isLoading ? (
-          <Loader className='mr-2 h-4 w-4 animate-spin' />
-        ) : (
-          <Github className='mr-2 h-4 w-4' />
-        )}{' '}
-        GitHub
-      </Button>
+      <GithubLoginButton />
     </div>
   )
 }
