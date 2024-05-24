@@ -21,7 +21,7 @@ export default async function RootLayout({
     data: { user },
   } = await supabase.auth.getUser()
   if (!user) {
-    redirect('/login')
+    redirect('/auth/login')
   }
   return (
     <main className={cn('min-h-screen grid w-full lg:grid-cols-[280px_1fr]')}>

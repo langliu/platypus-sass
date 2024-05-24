@@ -31,7 +31,7 @@ export function Profile() {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href='/settings/profile'>
+          <Link href='/dashboard/settings/profile'>
             <DropdownMenuItem>
               <User className='mr-2 h-4 w-4' />
               <span>Profile</span>

@@ -7,20 +7,28 @@ import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { login } from '../actions'
+import { signup } from '../../actions'
+import { createClient } from '@/lib/supabase/client'
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
-  async function onSubmit(event: React.SyntheticEvent) {
-    event.preventDefault()
+  async function loginWithGithub() {
     setIsLoading(true)
+    const supabase = createClient()
+    console.log('github')
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'github',
+      options: {
+        redirectTo: `${window.origin}/auth/callback`,
+      },
+    })
 
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 3000)
+    if (error) {
+      console.log('err', error)
+    }
   }
 
   return (
@@ -57,9 +65,9 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               disabled={isLoading}
             />
           </div>
-          <Button disabled={isLoading} formAction={login}>
+          <Button disabled={isLoading} formAction={signup}>
             {isLoading && <Loader className='mr-2 h-4 w-4 animate-spin' />}
-            登录
+            注册
           </Button>
         </div>
       </form>
@@ -71,7 +79,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           <span className='bg-background px-2 text-muted-foreground'>其他登录方式</span>
         </div>
       </div>
-      <Button variant='outline' type='button' disabled={isLoading}>
+      <Button variant='outline' type='button' onClick={loginWithGithub}>
         {isLoading ? (
           <Loader className='mr-2 h-4 w-4 animate-spin' />
         ) : (

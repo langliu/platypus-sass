@@ -9,7 +9,7 @@ export default function Home() {
         Dashboard
       </Link>
 
-      <Link href={'/login'} className={buttonVariants({ variant: 'default' })}>
+      <Link href={'/auth/login'} className={buttonVariants({ variant: 'default' })}>
         Login
       </Link>
       <ModeToggle />
