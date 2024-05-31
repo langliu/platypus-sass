@@ -20,7 +20,7 @@ export async function login(formData: FormData) {
   redirect('/')
 }
 
-export async function signup(formData: FormData) {
+export async function signUp(formData: FormData) {
   const supabase = createClient()
   const data = {
     email: formData.get('email') as string,

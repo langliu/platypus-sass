@@ -1,23 +1,23 @@
 'use client'
 
-import * as React from 'react'
+import type { HTMLAttributes } from 'react'
+import { useFormStatus } from 'react-dom'
 import { Loader } from 'lucide-react'
-
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { signup } from '../../actions'
+import { signUp } from '../../actions'
 import GithubLoginButton from '../../(components)/GithubLoginButton'
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface UserAuthFormProps extends HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
+  const { pending } = useFormStatus()
 
   return (
     <div className={cn('grid gap-6', className)} {...props}>
-      <form>
+      <form action={signUp}>
         <div className='grid gap-2'>
           <div className='grid gap-1'>
             <Label className='sr-only' htmlFor='email'>
@@ -30,7 +30,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               autoCapitalize='none'
               autoComplete='email'
               autoCorrect='off'
-              disabled={isLoading}
+              disabled={pending}
               name='email'
             />
           </div>
@@ -46,11 +46,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               autoCapitalize='none'
               autoComplete='password'
               autoCorrect='off'
-              disabled={isLoading}
+              disabled={pending}
             />
           </div>
-          <Button disabled={isLoading} formAction={signup}>
-            {isLoading && <Loader className='mr-2 h-4 w-4 animate-spin' />}
+          <Button type='submit' disabled={pending}>
+            {pending && <Loader className='mr-2 h-4 w-4 animate-spin' />}
             注册
           </Button>
         </div>
